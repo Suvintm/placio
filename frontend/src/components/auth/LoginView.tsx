@@ -84,7 +84,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onSwitch }) => {
       </form>
 
       <div className="auth-switch">
-        New to CareerElite? 
+        New to Placio? 
         <a href="#" className="auth-switch-link" onClick={(e) => { e.preventDefault(); onSwitch(); }}>
           Create an account
         </a>

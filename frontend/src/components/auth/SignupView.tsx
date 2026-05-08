@@ -7,7 +7,7 @@ interface SignupViewProps {
   onSwitch: () => void;
 }
 
-type Role = 'STUDENT' | 'COLLEGE' | 'COMPANY';
+import type { Role } from '../../context/AuthContext';
 
 const SignupView: React.FC<SignupViewProps> = ({ onSwitch }) => {
   const navigate = useNavigate();

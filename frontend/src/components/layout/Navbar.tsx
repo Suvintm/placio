@@ -3,12 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import '../../styles/navbar.css';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onMenuClick: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const navigate = useNavigate();
 
   return (
     <nav className="navbar">
       <div className="nav-left">
+        <button className="menu-toggle-btn" onClick={onMenuClick}>
+          <span className="menu-line line-long"></span>
+          <span className="menu-line line-medium"></span>
+          <span className="menu-line line-short"></span>
+        </button>
         <img 
           src={logo} 
           alt="Placio" 
