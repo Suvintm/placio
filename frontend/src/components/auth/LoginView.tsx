@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../../assets/logo.png';
 
 interface LoginViewProps {
   onSwitch: () => void;
@@ -9,7 +10,10 @@ const LoginView: React.FC<LoginViewProps> = ({ onSwitch }) => {
 
   return (
     <div className="form-container">
-      <h1 className="form-title">Welcome back</h1>
+      <div className="title-row">
+        <h1 className="form-title">Welcome back</h1>
+        <img src={logo} alt="Placio" className="form-header-logo" />
+      </div>
       <p className="form-subtitle">Enter your institutional credentials to continue.</p>
 
       <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
@@ -22,19 +26,14 @@ const LoginView: React.FC<LoginViewProps> = ({ onSwitch }) => {
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </span>
-            <input 
-              type="email" 
-              className="input-field input-field-with-icon" 
-              placeholder="alex.sterling@university.edu" 
-              required 
-            />
+            <input type="email" className="input-field input-field-with-icon" placeholder="john@example.edu" required />
           </div>
         </div>
 
         <div className="input-group">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <label className="input-label">Password</label>
-            <a href="#" className="auth-switch-link" style={{ fontSize: '13px', marginBottom: '8px' }}>Forgot password?</a>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <label className="input-label" style={{ marginBottom: 0 }}>Password</label>
+            <a href="#" className="forgot-password">Forgot password?</a>
           </div>
           <div className="input-field-wrapper">
             <span className="input-icon">
@@ -65,7 +64,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onSwitch }) => {
         </div>
 
         <button type="submit" className="submit-btn">
-          Sign In
+          Sign In 
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
             <polyline points="12 5 19 12 12 19"></polyline>

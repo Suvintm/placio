@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../../assets/logo.png';
 
 interface SignupViewProps {
   onSwitch: () => void;
@@ -12,7 +13,10 @@ const SignupView: React.FC<SignupViewProps> = ({ onSwitch }) => {
 
   return (
     <div className="form-container">
-      <h1 className="form-title">Create an account</h1>
+      <div className="title-row">
+        <h1 className="form-title">Create an account</h1>
+        <img src={logo} alt="Placio" className="form-header-logo" />
+      </div>
       <p className="form-subtitle">Select your profile type to begin the onboarding process.</p>
 
       <div className="role-cards" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>

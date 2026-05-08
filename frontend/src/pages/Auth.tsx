@@ -62,11 +62,27 @@ const Auth: React.FC = () => {
       </div>
 
       <div className="auth-right">
+        {/* Modern Auth Toggle */}
+        <div className="auth-mode-toggle">
+          <div 
+            className={`toggle-option ${!isLogin ? 'active' : ''}`}
+            onClick={() => setIsLogin(false)}
+          >
+            Sign Up
+          </div>
+          <div 
+            className={`toggle-option ${isLogin ? 'active' : ''}`}
+            onClick={() => setIsLogin(true)}
+          >
+            Login
+          </div>
+          <div className={`toggle-slider ${isLogin ? 'login-active' : 'signup-active'}`}></div>
+        </div>
+
         <div className="company-carousel-container">
           <p className="carousel-label">Trusted by industry leaders</p>
           <div className="company-carousel">
             <div className="company-track">
-              {/* Company Logos (Duplicated for infinite scroll) */}
               {[...companyLogos, ...companyLogos].map((logoSrc, index) => (
                 <div key={index} className="company-logo-item">
                   <img src={logoSrc} alt="Partner Logo" className="partner-logo-img" />
