@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/logo.png';
 
 interface LoginViewProps {
@@ -8,11 +9,13 @@ interface LoginViewProps {
 
 const LoginView: React.FC<LoginViewProps> = ({ onSwitch }) => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate successful login and redirect
+    // For mock login, we default to STUDENT role
+    login('user@example.com', 'STUDENT');
     navigate('/student/dashboard');
   };
 

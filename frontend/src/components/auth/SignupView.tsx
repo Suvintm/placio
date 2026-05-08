@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/logo.png';
 
 interface SignupViewProps {
@@ -10,12 +11,14 @@ type Role = 'STUDENT' | 'COLLEGE' | 'COMPANY';
 
 const SignupView: React.FC<SignupViewProps> = ({ onSwitch }) => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [role, setRole] = useState<Role>('STUDENT');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate successful signup and redirect based on role
+    // In a real app, you'd get the email from the form state
+    login('user@example.com', role);
     const path = `/${role.toLowerCase()}/dashboard`;
     navigate(path);
   };
