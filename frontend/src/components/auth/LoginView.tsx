@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
 interface LoginViewProps {
@@ -6,7 +7,14 @@ interface LoginViewProps {
 }
 
 const LoginView: React.FC<LoginViewProps> = ({ onSwitch }) => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate successful login and redirect
+    navigate('/student/dashboard');
+  };
 
   return (
     <div className="form-container">
@@ -16,7 +24,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onSwitch }) => {
       </div>
       <p className="form-subtitle">Enter your institutional credentials to continue.</p>
 
-      <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+      <form className="auth-form" onSubmit={handleLogin}>
         <div className="input-group">
           <label className="input-label">Institutional Email</label>
           <div className="input-field-wrapper">

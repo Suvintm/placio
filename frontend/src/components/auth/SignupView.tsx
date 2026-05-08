@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
 interface SignupViewProps {
@@ -8,8 +9,16 @@ interface SignupViewProps {
 type Role = 'STUDENT' | 'COLLEGE' | 'COMPANY';
 
 const SignupView: React.FC<SignupViewProps> = ({ onSwitch }) => {
+  const navigate = useNavigate();
   const [role, setRole] = useState<Role>('STUDENT');
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate successful signup and redirect based on role
+    const path = `/${role.toLowerCase()}/dashboard`;
+    navigate(path);
+  };
 
   return (
     <div className="form-container">
@@ -70,7 +79,7 @@ const SignupView: React.FC<SignupViewProps> = ({ onSwitch }) => {
         </div>
       </div>
 
-      <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+      <form className="auth-form" onSubmit={handleSignup}>
         <div className="input-row">
           <div className="input-group">
             <label className="input-label">First Name</label>
