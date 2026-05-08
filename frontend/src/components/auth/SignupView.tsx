@@ -19,8 +19,10 @@ const SignupView: React.FC<SignupViewProps> = ({ onSwitch }) => {
     e.preventDefault();
     // In a real app, you'd get the email from the form state
     login('user@example.com', role);
-    const path = `/${role.toLowerCase()}/dashboard`;
-    navigate(path);
+    if (role) {
+      const path = `/${role.toLowerCase()}/dashboard`;
+      navigate(path);
+    }
   };
 
   return (
