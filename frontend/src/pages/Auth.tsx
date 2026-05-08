@@ -62,41 +62,48 @@ const Auth: React.FC = () => {
       </div>
 
       <div className="auth-right">
-        {/* Modern Auth Toggle */}
-        <div className="auth-mode-toggle">
-          <div 
-            className={`toggle-option ${!isLogin ? 'active' : ''}`}
-            onClick={() => setIsLogin(false)}
-          >
-            Sign Up
+        {/* Fixed Header for Mobile */}
+        <div className="auth-fixed-header">
+          <div className="header-top-row">
+            <img src={logo} alt="Placio" className="mobile-header-logo" />
+            <div className="auth-mode-toggle">
+              <div 
+                className={`toggle-option ${!isLogin ? 'active' : ''}`}
+                onClick={() => setIsLogin(false)}
+              >
+                Sign Up
+              </div>
+              <div 
+                className={`toggle-option ${isLogin ? 'active' : ''}`}
+                onClick={() => setIsLogin(true)}
+              >
+                Login
+              </div>
+              <div className={`toggle-slider ${isLogin ? 'login-active' : 'signup-active'}`}></div>
+            </div>
           </div>
-          <div 
-            className={`toggle-option ${isLogin ? 'active' : ''}`}
-            onClick={() => setIsLogin(true)}
-          >
-            Login
-          </div>
-          <div className={`toggle-slider ${isLogin ? 'login-active' : 'signup-active'}`}></div>
-        </div>
 
-        <div className="company-carousel-container">
-          <p className="carousel-label">Trusted by industry leaders</p>
-          <div className="company-carousel">
-            <div className="company-track">
-              {[...companyLogos, ...companyLogos].map((logoSrc, index) => (
-                <div key={index} className="company-logo-item">
-                  <img src={logoSrc} alt="Partner Logo" className="partner-logo-img" />
-                </div>
-              ))}
+          <div className="company-carousel-container">
+            <p className="carousel-label">Trusted by industry leaders</p>
+            <div className="company-carousel">
+              <div className="company-track">
+                {[...companyLogos, ...companyLogos].map((logoSrc, index) => (
+                  <div key={index} className="company-logo-item">
+                    <img src={logoSrc} alt="Partner Logo" className="partner-logo-img" />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {isLogin ? (
-          <LoginView onSwitch={toggleAuth} />
-        ) : (
-          <SignupView onSwitch={toggleAuth} />
-        )}
+        <div className="form-scroll-container">
+          {isLogin ? (
+            <LoginView onSwitch={toggleAuth} />
+          ) : (
+            <SignupView onSwitch={toggleAuth} />
+          )}
+        </div>
       </div>
     </div>
   );
