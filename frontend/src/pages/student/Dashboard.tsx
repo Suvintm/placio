@@ -1,11 +1,14 @@
 import React from 'react';
+import DashboardLayout from '../../components/layout/DashboardLayout';
 
 const StudentDashboard: React.FC = () => {
   return (
-    <div style={{ padding: '40px', textAlign: 'center' }}>
-      <h1>Student Dashboard</h1>
-      <p>Welcome to your Placio student portal. Here you can track your placements, build your profile, and apply to companies.</p>
-    </div>
+    <DashboardLayout>
+      <div style={{ padding: '40px', textAlign: 'center' }}>
+        <h1>Student Dashboard</h1>
+        <p>Welcome to your Placio student portal. Here you can track your placements, build your profile, and apply to companies.</p>
+      </div>
+    </DashboardLayout>
   );
 };
 
