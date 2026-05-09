@@ -1,7 +1,8 @@
 from typing import Optional, List, Any
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import SQLModel, Field, Relationship, Column, JSON
 from enum import Enum
 from pydantic import ConfigDict, AliasPath, AliasChoices
+from datetime import datetime
 
 class UserRole(str, Enum):
     STUDENT = "STUDENT"
@@ -130,3 +131,67 @@ class Token(SQLModel):
     access_token: str
     token_type: str
     user: UserRead
+
+class RequestStatus(str, Enum):
+    PENDING = "PENDING"
+    ACCEPTED = "ACCEPTED"
+    REJECTED = "REJECTED"
+
+class Job(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    job_id: str = Field(unique=True, index=True) # Randomly generated like JOB-1234
+    company_id: int = Field(foreign_key="companyprofile.id")
+    title: str
+    description: str
+    skills_required: str
+    eligibility_criteria: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    is_active: bool = Field(default=True)
+
+class AptitudeTest(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    company_id: int = Field(foreign_key="companyprofile.id")
+    title: str
+    description: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class Question(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    test_id: int = Field(foreign_key="aptitudetest.id")
+    question_text: str
+    options: Any = Field(sa_column=Column(JSON))
+    correct_answer: str
+
+class PlacementRequest(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    company_id: int = Field(foreign_key="companyprofile.id")
+    college_id: int = Field(foreign_key="collegeprofile.id")
+    job_id: int = Field(foreign_key="job.id")
+    test_id: int = Field(foreign_key="aptitudetest.id")
+    status: RequestStatus = Field(default=RequestStatus.PENDING)
+    message: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+# API Schemas
+
+class QuestionCreate(SQLModel):
+    question_text: str
+    options: List[str]
+    correct_answer: str
+
+class TestCreate(SQLModel):
+    title: str
+    description: str
+    questions: List[QuestionCreate]
+
+class JobCreate(SQLModel):
+    title: str
+    description: str
+    skills_required: str
+    eligibility_criteria: str
+
+class PlacementRequestCreate(SQLModel):
+    college_id: int
+    job_id: int
+    test_id: int
+    message: Optional[str] = None

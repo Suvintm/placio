@@ -1,0 +1,109 @@
+.fullscreen-loader-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.water-bubble-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.bubble-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  filter: url(#goo);
+}
+
+.bubble {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+}
+
+.bubble-main {
+  width: 50px;
+  height: 50px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.bubble-1 {
+  width: 30px;
+  height: 30px;
+  animation: orbit1 3s infinite linear;
+}
+
+.bubble-2 {
+  width: 25px;
+  height: 25px;
+  animation: orbit2 4s infinite linear;
+}
+
+.bubble-3 {
+  width: 35px;
+  height: 35px;
+  animation: orbit3 2.5s infinite linear;
+}
+
+.bubble-4 {
+  width: 20px;
+  height: 20px;
+  animation: orbit4 3.5s infinite linear;
+}
+
+.bubble-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3b82f6;
+  letter-spacing: 0.5px;
+  animation: textPulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.2); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes orbit1 {
+  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(30px) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(30px) rotate(-360deg); }
+}
+
+@keyframes orbit2 {
+  0% { transform: translate(-50%, -50%) rotate(120deg) translateX(40px) rotate(-120deg); }
+  100% { transform: translate(-50%, -50%) rotate(480deg) translateX(40px) rotate(-480deg); }
+}
+
+@keyframes orbit3 {
+  0% { transform: translate(-50%, -50%) rotate(240deg) translateX(25px) rotate(-240deg); }
+  100% { transform: translate(-50%, -50%) rotate(600deg) translateX(25px) rotate(-600deg); }
+}
+
+@keyframes orbit4 {
+  0% { transform: translate(-50%, -50%) rotate(45deg) translateX(35px) rotate(-45deg); }
+  100% { transform: translate(-50%, -50%) rotate(-315deg) translateX(35px) rotate(315deg); }
+}
+
+@keyframes textPulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}

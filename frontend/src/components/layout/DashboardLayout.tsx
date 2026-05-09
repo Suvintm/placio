@@ -22,7 +22,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         {isSidebarOpen && (
           <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>
         )}
-        <main className="dashboard-content">
+        <main className="dashboard-content" style={{ position: 'relative' }}>
           {children}
         </main>
       </div>
