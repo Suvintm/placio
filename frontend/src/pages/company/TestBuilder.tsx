@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { useAuth } from '../../context/AuthContext';
 import WaterBubbleLoader from '../../components/common/WaterBubbleLoader';
+import './CompanyStyles.css';
 
 interface Question {
   question_text: string;
@@ -171,36 +172,36 @@ const TestBuilder: React.FC = () => {
   return (
     <DashboardLayout>
       {loading && <WaterBubbleLoader fullScreen={true} text="Loading Tests..." />}
-      <div style={{ padding: '24px' }}>
+      <div className="premium-container">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-          <h2>Test Builder</h2>
-          <button 
-            onClick={openCreateModal}
-            style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-          >
+          <div>
+            <h2 className="premium-header-title">Test Builder</h2>
+            <p className="premium-header-subtitle">Design custom aptitude tests for your placement drives.</p>
+          </div>
+          <button onClick={openCreateModal} className="premium-btn-primary">
             + Create New Test
           </button>
         </div>
 
         {!loading && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+          <div className="premium-grid">
             {tests.length === 0 ? (
               <p>No tests created yet.</p>
             ) : (
             tests.map(test => (
-              <div key={test.id} style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '20px', backgroundColor: 'white', display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{ margin: '0 0 8px 0', color: '#111827' }}>{test.title}</h3>
-                <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: '14px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1 }}>
+              <div key={test.id} className="premium-card">
+                <h3 className="premium-card-title">{test.title}</h3>
+                <p style={{ margin: '12px 0 16px 0', color: '#4b5563', fontSize: '14px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1, lineHeight: '1.5' }}>
                   {test.description}
                 </p>
-                <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '16px' }}>
-                  Created on: {new Date(test.created_at).toLocaleDateString()}
+                <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '16px' }}>
+                  Created: {new Date(test.created_at).toLocaleDateString()}
                 </div>
-                <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '16px', display: 'flex', justifyContent: 'flex-end' }}>
+                <div style={{ borderTop: '1px solid #f3f4f6', paddingTop: '16px', display: 'flex', justifyContent: 'flex-end' }}>
                   <button 
                     onClick={() => openEditModal(test)}
                     disabled={isLoadingTestDetails}
-                    style={{ padding: '6px 12px', backgroundColor: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '4px', cursor: isLoadingTestDetails ? 'not-allowed' : 'pointer', fontSize: '14px', fontWeight: 500 }}
+                    className="premium-btn-secondary"
                   >
                     {isLoadingTestDetails && editingTestId === test.id ? 'Loading...' : 'Edit Test'}
                   </button>
@@ -213,51 +214,51 @@ const TestBuilder: React.FC = () => {
 
         {/* Modal */}
         {showModal && (
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
-            <div style={{ backgroundColor: 'white', padding: '32px', borderRadius: '12px', width: '100%', maxWidth: '800px', maxHeight: '90vh', overflowY: 'auto' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                <h3 style={{ margin: 0 }}>{editingTestId ? 'Edit Aptitude Test' : 'Create Aptitude Test'}</h3>
-                <button onClick={() => setShowModal(false)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#6b7280' }}>&times;</button>
+          <div className="premium-modal-overlay">
+            <div className="premium-modal-content" style={{ maxWidth: '800px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                <h3 className="premium-header-title" style={{ fontSize: '24px' }}>{editingTestId ? 'Edit Aptitude Test' : 'Create Aptitude Test'}</h3>
+                <button onClick={() => setShowModal(false)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#9ca3af' }}>&times;</button>
               </div>
               
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <div style={{ padding: '16px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-                  <div style={{ marginBottom: '16px' }}>
-                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, fontSize: '14px' }}>Test Title</label>
-                    <input type="text" required value={title} onChange={e => setTitle(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #d1d5db' }} placeholder="e.g. Software Engineer Pre-Screening" />
+              <form onSubmit={handleSubmit}>
+                <div style={{ padding: '24px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', marginBottom: '24px' }}>
+                  <div className="premium-input-group">
+                    <label className="premium-label">Test Title</label>
+                    <input type="text" required value={title} onChange={e => setTitle(e.target.value)} className="premium-input" placeholder="e.g. Software Engineer Pre-Screening" />
                   </div>
-                  <div>
-                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, fontSize: '14px' }}>Description & Instructions</label>
-                    <textarea required value={description} onChange={e => setDescription(e.target.value)} rows={2} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #d1d5db', resize: 'vertical' }} placeholder="Instructions for candidates..." />
+                  <div className="premium-input-group" style={{ marginBottom: 0 }}>
+                    <label className="premium-label">Description & Instructions</label>
+                    <textarea required value={description} onChange={e => setDescription(e.target.value)} className="premium-textarea" placeholder="Instructions for candidates..." />
                   </div>
                 </div>
 
-                <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '16px' }}>
-                  <h4 style={{ margin: '0 0 16px 0' }}>Questions ({questions.length})</h4>
+                <div>
+                  <h4 style={{ margin: '0 0 16px 0', fontSize: '18px', color: '#1e293b' }}>Questions ({questions.length})</h4>
                   
                   {questions.map((q, qIndex) => (
-                    <div key={qIndex} style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px', marginBottom: '16px', position: 'relative' }}>
+                    <div key={qIndex} style={{ padding: '24px', border: '1px solid #e2e8f0', borderRadius: '12px', marginBottom: '20px', position: 'relative', background: '#ffffff' }}>
                       {questions.length > 1 && (
-                        <button type="button" onClick={() => removeQuestion(qIndex)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '14px' }}>Remove</button>
+                        <button type="button" onClick={() => removeQuestion(qIndex)} style={{ position: 'absolute', top: '24px', right: '24px', background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}>Remove</button>
                       )}
                       
-                      <div style={{ marginBottom: '16px' }}>
-                        <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, fontSize: '14px' }}>Question {qIndex + 1}</label>
-                        <input type="text" required value={q.question_text} onChange={e => handleQuestionChange(qIndex, 'question_text', e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #d1d5db' }} placeholder="Enter question..." />
+                      <div className="premium-input-group">
+                        <label className="premium-label">Question {qIndex + 1}</label>
+                        <input type="text" required value={q.question_text} onChange={e => handleQuestionChange(qIndex, 'question_text', e.target.value)} className="premium-input" placeholder="Enter question..." />
                       </div>
 
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                         {q.options.map((opt, oIndex) => (
                           <div key={oIndex}>
-                            <label style={{ display: 'block', marginBottom: '4px', fontSize: '12px', color: '#6b7280' }}>Option {oIndex + 1}</label>
-                            <input type="text" required value={opt} onChange={e => handleOptionChange(qIndex, oIndex, e.target.value)} style={{ width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid #d1d5db' }} placeholder={`Option ${oIndex + 1}`} />
+                            <label className="premium-label" style={{ fontSize: '12px', color: '#64748b' }}>Option {oIndex + 1}</label>
+                            <input type="text" required value={opt} onChange={e => handleOptionChange(qIndex, oIndex, e.target.value)} className="premium-input" placeholder={`Option ${oIndex + 1}`} />
                           </div>
                         ))}
                       </div>
 
-                      <div>
-                        <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, fontSize: '14px', color: '#16a34a' }}>Correct Answer</label>
-                        <select required value={q.correct_answer} onChange={e => handleQuestionChange(qIndex, 'correct_answer', e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #d1d5db', backgroundColor: '#f0fdf4' }}>
+                      <div className="premium-input-group" style={{ marginBottom: 0 }}>
+                        <label className="premium-label" style={{ color: '#059669' }}>Correct Answer</label>
+                        <select required value={q.correct_answer} onChange={e => handleQuestionChange(qIndex, 'correct_answer', e.target.value)} className="premium-select" style={{ backgroundColor: '#ecfdf5', borderColor: '#34d399' }}>
                           <option value="">Select the correct option</option>
                           {q.options.filter(o => o.trim() !== '').map((opt, i) => (
                             <option key={i} value={opt}>{opt}</option>
@@ -267,14 +268,14 @@ const TestBuilder: React.FC = () => {
                     </div>
                   ))}
 
-                  <button type="button" onClick={addQuestion} style={{ padding: '10px 16px', backgroundColor: '#f3f4f6', color: '#374151', border: '1px dashed #d1d5db', borderRadius: '6px', cursor: 'pointer', width: '100%', fontWeight: 500 }}>
+                  <button type="button" onClick={addQuestion} className="premium-btn-secondary" style={{ width: '100%', borderStyle: 'dashed', background: 'transparent' }}>
                     + Add Another Question
                   </button>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '16px', borderTop: '1px solid #e5e7eb', paddingTop: '24px' }}>
-                  <button type="button" onClick={() => setShowModal(false)} style={{ padding: '10px 16px', backgroundColor: 'transparent', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: 500 }}>Cancel</button>
-                  <button type="submit" disabled={isSubmitting} style={{ padding: '10px 16px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '6px', cursor: isSubmitting ? 'not-allowed' : 'pointer', fontWeight: 500 }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '32px', borderTop: '1px solid #e2e8f0', paddingTop: '24px' }}>
+                  <button type="button" onClick={() => setShowModal(false)} className="premium-btn-secondary">Cancel</button>
+                  <button type="submit" disabled={isSubmitting} className="premium-btn-primary" style={{ width: '160px' }}>
                     {isSubmitting ? 'Saving...' : (editingTestId ? 'Save Changes' : 'Save Test')}
                   </button>
                 </div>

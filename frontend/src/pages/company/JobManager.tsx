@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { useAuth } from '../../context/AuthContext';
 import WaterBubbleLoader from '../../components/common/WaterBubbleLoader';
+import './CompanyStyles.css';
 
 interface Job {
   id: number;
@@ -111,47 +112,44 @@ const JobManager: React.FC = () => {
   return (
     <DashboardLayout>
       {loading && <WaterBubbleLoader fullScreen={true} text="Loading Jobs..." />}
-      <div style={{ padding: '24px' }}>
+      <div className="premium-container">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-          <h2>Job Manager</h2>
-          <button 
-            onClick={openCreateModal}
-            style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-          >
+          <div>
+            <h2 className="premium-header-title">Job Manager</h2>
+            <p className="premium-header-subtitle">Create and manage your active job listings.</p>
+          </div>
+          <button onClick={openCreateModal} className="premium-btn-primary">
             + Create New Job
           </button>
         </div>
 
         {!loading && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+          <div className="premium-grid">
             {jobs.length === 0 ? (
               <p>No jobs created yet.</p>
             ) : (
             jobs.map(job => (
-              <div key={job.id} style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '20px', backgroundColor: 'white', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <h3 style={{ margin: 0, color: '#111827' }}>{job.title}</h3>
-                  <span style={{ fontSize: '12px', padding: '2px 8px', backgroundColor: job.is_active ? '#dcfce7' : '#f3f4f6', color: job.is_active ? '#166534' : '#374151', borderRadius: '12px' }}>
+              <div key={job.id} className="premium-card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <h3 className="premium-card-title">{job.title}</h3>
+                  <span className={`premium-badge ${job.is_active ? 'premium-badge-success' : 'premium-badge-neutral'}`}>
                     {job.is_active ? 'Active' : 'Inactive'}
                   </span>
                 </div>
-                <p style={{ margin: '0 0 12px 0', color: '#6b7280', fontSize: '14px' }}>ID: {job.job_id}</p>
+                <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: '13px' }}>ID: {job.job_id}</p>
                 <div style={{ marginBottom: '12px', flex: 1 }}>
-                  <strong style={{ fontSize: '14px' }}>Skills:</strong>
+                  <strong style={{ fontSize: '13px', color: '#374151' }}>Skills Required:</strong>
                   <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: '#4b5563' }}>{job.skills_required}</p>
                 </div>
-                <div style={{ marginBottom: '16px' }}>
-                  <strong style={{ fontSize: '14px' }}>Eligibility:</strong>
+                <div style={{ marginBottom: '20px' }}>
+                  <strong style={{ fontSize: '13px', color: '#374151' }}>Eligibility:</strong>
                   <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: '#4b5563', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {job.eligibility_criteria}
                   </p>
                 </div>
-                <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '16px', display: 'flex', justifyContent: 'flex-end' }}>
-                  <button 
-                    onClick={() => openEditModal(job)}
-                    style={{ padding: '6px 12px', backgroundColor: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '4px', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}
-                  >
-                    Edit Job
+                <div style={{ borderTop: '1px solid #f3f4f6', paddingTop: '16px', display: 'flex', justifyContent: 'flex-end' }}>
+                  <button onClick={() => openEditModal(job)} className="premium-btn-secondary">
+                    Edit Details
                   </button>
                 </div>
               </div>
@@ -162,37 +160,37 @@ const JobManager: React.FC = () => {
 
         {/* Modal */}
         {showModal && (
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
-            <div style={{ backgroundColor: 'white', padding: '32px', borderRadius: '12px', width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div className="premium-modal-overlay">
+            <div className="premium-modal-content" style={{ maxWidth: '600px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                <h3 style={{ margin: 0 }}>{editingJobId ? 'Edit Job' : 'Create New Job'}</h3>
-                <button onClick={() => setShowModal(false)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#6b7280' }}>&times;</button>
+                <h3 className="premium-header-title" style={{ fontSize: '24px' }}>{editingJobId ? 'Edit Job Listing' : 'Create New Job Listing'}</h3>
+                <button onClick={() => setShowModal(false)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#9ca3af' }}>&times;</button>
               </div>
               
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, fontSize: '14px' }}>Job Title</label>
-                  <input type="text" name="title" required value={formData.title} onChange={handleInputChange} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #d1d5db' }} placeholder="e.g. Frontend Developer" />
+              <form onSubmit={handleSubmit}>
+                <div className="premium-input-group">
+                  <label className="premium-label">Job Title</label>
+                  <input type="text" name="title" required value={formData.title} onChange={handleInputChange} className="premium-input" placeholder="e.g. Frontend Developer" />
                 </div>
                 
-                <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, fontSize: '14px' }}>Skills Required</label>
-                  <input type="text" name="skills_required" required value={formData.skills_required} onChange={handleInputChange} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #d1d5db' }} placeholder="e.g. React, TypeScript, Node.js" />
+                <div className="premium-input-group">
+                  <label className="premium-label">Skills Required</label>
+                  <input type="text" name="skills_required" required value={formData.skills_required} onChange={handleInputChange} className="premium-input" placeholder="e.g. React, TypeScript, Node.js" />
                 </div>
 
-                <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, fontSize: '14px' }}>Eligibility Criteria</label>
-                  <textarea name="eligibility_criteria" required value={formData.eligibility_criteria} onChange={handleInputChange} rows={3} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #d1d5db', resize: 'vertical' }} placeholder="e.g. Minimum 7.5 CGPA, No standing arrears" />
+                <div className="premium-input-group">
+                  <label className="premium-label">Eligibility Criteria</label>
+                  <textarea name="eligibility_criteria" required value={formData.eligibility_criteria} onChange={handleInputChange} className="premium-textarea" placeholder="e.g. Minimum 7.5 CGPA, No standing arrears" />
                 </div>
 
-                <div>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, fontSize: '14px' }}>Detailed Job Description</label>
-                  <textarea name="description" required value={formData.description} onChange={handleInputChange} rows={5} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #d1d5db', resize: 'vertical' }} placeholder="Describe the responsibilities and perks..." />
+                <div className="premium-input-group">
+                  <label className="premium-label">Detailed Job Description</label>
+                  <textarea name="description" required value={formData.description} onChange={handleInputChange} className="premium-textarea" style={{ minHeight: '150px' }} placeholder="Describe the responsibilities and perks..." />
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '16px' }}>
-                  <button type="button" onClick={() => setShowModal(false)} style={{ padding: '10px 16px', backgroundColor: 'transparent', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: 500 }}>Cancel</button>
-                  <button type="submit" disabled={isSubmitting} style={{ padding: '10px 16px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '6px', cursor: isSubmitting ? 'not-allowed' : 'pointer', fontWeight: 500 }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '32px' }}>
+                  <button type="button" onClick={() => setShowModal(false)} className="premium-btn-secondary">Cancel</button>
+                  <button type="submit" disabled={isSubmitting} className="premium-btn-primary" style={{ width: '160px' }}>
                     {isSubmitting ? 'Saving...' : (editingJobId ? 'Save Changes' : 'Create Job')}
                   </button>
                 </div>
