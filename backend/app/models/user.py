@@ -136,6 +136,7 @@ class RequestStatus(str, Enum):
     PENDING = "PENDING"
     ACCEPTED = "ACCEPTED"
     REJECTED = "REJECTED"
+    PUBLISHED = "PUBLISHED"
 
 class Job(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -171,6 +172,20 @@ class PlacementRequest(SQLModel, table=True):
     status: RequestStatus = Field(default=RequestStatus.PENDING)
     message: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ApplicationStatus(str, Enum):
+    APPLIED = "APPLIED"
+    SHORTLISTED = "SHORTLISTED"
+    REJECTED = "REJECTED"
+    SELECTED = "SELECTED"
+
+class Application(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    student_id: int = Field(foreign_key="studentprofile.id")
+    job_id: int = Field(foreign_key="job.id")
+    request_id: int = Field(foreign_key="placementrequest.id") # Link to the specific drive
+    status: ApplicationStatus = Field(default=ApplicationStatus.APPLIED)
+    applied_at: datetime = Field(default_factory=datetime.utcnow)
 
 # API Schemas
 

@@ -1,12 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Auth from './pages/Auth';
 import StudentDashboard from './pages/student/Dashboard';
+import StudentJobDetails from './pages/student/JobDetails';
 import CollegeDashboard from './pages/college/Dashboard';
 import CompanyDashboard from './pages/company/Dashboard';
 import JobManager from './pages/company/JobManager';
 import TestBuilder from './pages/company/TestBuilder';
 import CollegeDiscovery from './pages/company/CollegeDiscovery';
 import PlacementRequests from './pages/company/PlacementRequests';
+import CollegePlacementRequests from './pages/college/PlacementRequests';
+import CollegeJobDetails from './pages/college/JobDetails';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
@@ -29,10 +32,34 @@ function App() {
             } 
           />
           <Route 
+            path="/student/jobs/:jobId" 
+            element={
+              <ProtectedRoute allowedRoles={['STUDENT']}>
+                <StudentJobDetails />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
             path="/college/dashboard" 
             element={
               <ProtectedRoute allowedRoles={['COLLEGE']}>
                 <CollegeDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/college/requests" 
+            element={
+              <ProtectedRoute allowedRoles={['COLLEGE']}>
+                <CollegePlacementRequests />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/college/jobs/:jobId" 
+            element={
+              <ProtectedRoute allowedRoles={['COLLEGE']}>
+                <CollegeJobDetails />
               </ProtectedRoute>
             } 
           />

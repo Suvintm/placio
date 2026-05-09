@@ -18,10 +18,13 @@ app = FastAPI(
 async def debug_exception_handler(request: Request, exc: Exception):
     print(f"ERROR: {exc}", file=sys.stderr)
     traceback.print_exc()
-    return JSONResponse(
+    response = JSONResponse(
         status_code=500,
         content={"detail": "Internal Server Error", "error": str(exc)},
     )
+    # Manually add CORS headers for exception responses
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
 
 # Initialize Database on startup
 @app.on_event("startup")
@@ -31,7 +34,7 @@ def on_startup():
 # Set all CORS enabled origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
+    allow_origins=["*"], # Temporarily allow all for debugging
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

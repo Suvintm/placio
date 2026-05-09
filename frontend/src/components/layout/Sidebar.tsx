@@ -31,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         return [
           { name: 'Dashboard', path: '/college/dashboard', icon: 'grid' },
           { name: 'Students', path: '/college/students', icon: 'users' },
-          { name: 'Placements', path: '/college/placements', icon: 'trending-up' },
+          { name: 'Placement Requests', path: '/college/requests', icon: 'send' },
           { name: 'Analytics', path: '/college/analytics', icon: 'bar-chart' },
           { name: 'Settings', path: '/college/settings', icon: 'settings' },
         ];
