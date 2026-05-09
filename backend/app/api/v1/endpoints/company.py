@@ -7,10 +7,28 @@ from ....db.session import get_session
 from ..deps import get_current_company
 from ....models.user import (
     User, Job, JobCreate, AptitudeTest, TestCreate, Question, 
-    CollegeProfile, PlacementRequest, PlacementRequestCreate
+    CollegeProfile, PlacementRequest, PlacementRequestCreate,
+    CompanyProfile
 )
 
 router = APIRouter()
+
+@router.get("/profile")
+def get_company_profile(
+    current_company: User = Depends(get_current_company)
+) -> Any:
+    if not current_company.company_profile:
+        raise HTTPException(status_code=404, detail="Company profile not found")
+        
+    return {
+        "user": {
+            "email": current_company.email,
+            "full_name": current_company.full_name,
+            "role": current_company.role
+        },
+        "profile": current_company.company_profile
+    }
+
 
 @router.post("/jobs", response_model=Job)
 def create_job(
